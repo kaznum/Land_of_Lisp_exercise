@@ -57,5 +57,9 @@
       (cons (cons 'pork (cons 'beef (cons 'chicken ())))
 	    ()))
 
-;; to be continued
+(cddr '((peas carrots tomatoes) (pork beef chicken) duck))
+(caddr '((peas carrots tomatoes) (pork beef chicken) duck))
+(cddar '((peas carrots tomatoes) (pork beef chicken) duck))
+(cadadr '((peas carrots tomatoes) (pork beef chicken) duck))
+
 

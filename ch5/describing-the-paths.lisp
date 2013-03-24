@@ -21,6 +21,19 @@
 
 (mapcar #'sqrt '(1 2 3 4 5))
 
+(mapcar #'car '((foo bar) (baz qux)))
 
-;; To be continued
+(mapcar (function car) '((foo bar) (baz qux)))
+
+(let ((car "Honda Fit"))
+  (mapcar #'car '((foo bar) (baz qux))))
+
+;; Joining the Description
+(append '(mary had) '(a) '(little lamb))
+
+(apply #'append '((mary had) (a) (little lamb)))
+
+(apply #'append '((There is a door going west from here.)
+		  (There is a ladder going upstairs from here.)))
+
 

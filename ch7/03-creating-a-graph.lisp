@@ -2,4 +2,30 @@
 
 ;; Generating the Dot Information
 
+;; Converting Node Identifier
+(defun dot-name (exp)
+  (substitute-if #\_ (complement #'alphanumericp) (prin1-to-string exp)))
+
+(dot-name 'foo)
+(dot-name 'foo!)
+(dot-name '24)
+
+;; substitute-if is a generic function
+;; for string
+(substitute-if #\e #'digit-char-p "I'm a l33t hack3r")
+;; for list
+(substitute-if 0 #'oddp '(1 2 3 4 5 6 7 8))
+
+(complement #'alphanumericp)
+
+(apply (complement #'alphanumericp) (list #\1))
+(apply (complement #'alphanumericp) (list #\x))
+(apply (complement #'alphanumericp) (list #\.))
+(funcall (complement #'alphanumericp) #\1)
+(funcall (complement #'alphanumericp) #\x)
+(funcall (complement #'alphanumericp) #\.)
+
+;; Adding labels to Graph Nodes
+
+;; to be continued
 

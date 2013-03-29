@@ -97,5 +97,39 @@
 
 ;; Turning the DOT File into a Picture
 
+(defun dot->png (fname thunk)
+  (with-open-file (*standard-output*
+		   fname
+		   :direction :output
+		   :if-exists :supersede)
+    (funcall thunk))
+  (ext:shell (concatenate 'string "dot -Tpng -O " fname)))
+
+;; Using Thunks
+;;;; no code
+
+;; Writing to a File
+
+(with-open-file (my-stream
+		 "testfile.txt"
+		 :direction :output
+		 :if-exists :supersede)
+  (princ "Hello File!" my-stream))
+
+;; Creating a Stream
+
+;; Understanding Keyword Parameters
+(let ((cigar 5))
+  cigar)
+
+(let ((:cigar 5))
+  :cigar)
+;; error
+
+;; Capturing the Console Output
+
+;; Creating a Picture of Our Graph
+
+
 ;; to be continued
 

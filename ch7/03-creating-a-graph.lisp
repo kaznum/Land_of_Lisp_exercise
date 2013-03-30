@@ -130,6 +130,10 @@
 
 ;; Creating a Picture of Our Graph
 
+(defun graph->png (fname nodes edges)
+  (dot->png fname
+	    (lambda () (graph->dot nodes edges))))
 
-;; to be continued
+(graph->png "wizard.dot" *wizard-nodes* *wizard-edges*)
+
 

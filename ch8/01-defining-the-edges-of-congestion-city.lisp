@@ -34,6 +34,42 @@
      collect (+ 100 n))
 
 ;; Preventing Islands
+(defun direct-edges (node edge-list)
+  (remove-if-not (lambda (x)
+		   (eql (car x) node))
+		 edge-list))
 
+(defun get-connected (node edge-list)
+  (let ((visited nil))
+    (label ((traverse (node)
+		      (unless (member node visited)
+			(push node visited)
+			(mapc (lambda (edge)
+				(traverse (cdr edge)))
+			      (direct-edges node edge-list)))))
+	   (traverse node))
+    visited))
+
+(defun find-islands (nodes edge-list)
+  (let ((islands nil))
+    (labels ((find-island (nodes)
+			 (let* ((connected (get-connected (car nodes) edge-list))
+				(unconnected (set-difference nodes connected)))
+			   (push connected islands)
+			   (when unconnected
+			     (find-island unconnected)))))
+	   (find-island nodes))
+    islands))
+
+(defun connect-with-bridge (islands)
+  (when (cdr islands)
+    (append (edge-pair (caar islands) (caadr islands))
+	    (connect-with-bridge (cdr islands)))))
+
+
+(defun connect-all-islands (nodes edge-list)
+  (append (connect-with-bridge (find-island nodes edge-list)) edge-list))
+
+;; Building the Final Edges for Congestion City
 
 ;; To be continued

@@ -72,4 +72,53 @@
 
 ;; Building the Final Edges for Congestion City
 
-;; To be continued
+(defun make-city-edges ()
+  (let* ((nodes (loop for i from 1 to *node-num*
+		     collect i))
+	 (edge-list (connect-all-islands nodes (make-edge-list)))
+	 (cops (remove-if-not (lambda (x)
+				(zerop (random *cop-odds*)))
+			      edge-list)))
+    (add-cops (edge-to-alist edge-list) cops)))
+
+(defun edge-to-alist (edge-list)
+  (mapcar (lambda (node1)
+	    (cons node1
+		  (mapcar (lambda (edge)
+			    (list (cdr edge)))
+			  (remove-duplicates (direct-edges node1 edge-list)
+					     :test #'equal))))
+	  (remove-duplicates (mapcar #'car edge-list))))
+
+;; TEST
+;;(edge-to-alist (make-edge-list))
+
+(defun add-cops (edge-alist edges-with-cops)
+  (mapcar (lambda (x)
+	    (let ((node1 (car x))
+		  (node1-edges (cdr x)))
+	      (cons node1
+		    (mapcar (lambda (edge)
+			      (let ((node2 (car edge)))
+				(if (intersection (edge-pair node1 node2)
+						  edge-with-cops
+						  :test #'equal)
+				    (list node2 'cops)
+				    edge)))
+			    node1-edges))))
+	  edge-alist))
+
+
+;; The make-city-edges Function
+(let ((a 5)
+      (b (+ a 2)))
+  b)
+;; error
+(let* ((a 5)
+      (b (+ a 2)))
+  b)
+;; 7
+
+;; The edges-to-list Function
+;; The add-cops Function
+

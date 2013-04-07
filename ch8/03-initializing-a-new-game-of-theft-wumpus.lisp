@@ -57,7 +57,7 @@
 
 
 (defun connect-all-islands (nodes edge-list)
-  (append (connect-with-bridge (find-island nodes edge-list)) edge-list))
+  (append (connect-with-bridge (find-islands nodes edge-list)) edge-list))
 
 (defun make-city-edges ()
   (let* ((nodes (loop for i from 1 to *node-num*
@@ -100,7 +100,7 @@
   (member b (neighbors a edge-alist)))
 
 (defun within-two (a b edge-alist)
-  (or (within-two a b edge-alist)
+  (or (within-one a b edge-alist)
       (some (lambda (x)
 	      (within-one x b edge-alist))
 	    (neighbors a edge-alist))))

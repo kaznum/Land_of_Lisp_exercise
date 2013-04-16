@@ -140,3 +140,44 @@
 
 ;; TEST
 (new-game)
+
+;; Drawing a City from Partial Knowledge
+(defun known-city-nodes ()
+  (mapcar (lambda (node)
+	    (if (member node *visited-nodes*)
+		(let ((n (assoc node *congestion-city-nodes*)))
+		  (if (eql node *player-pos*)
+		      (append n '(*))
+		      n))
+		(list node '?)))
+	  (remove-duplicates
+	   (append *visited-nodes*
+		   (mapcan (lambda (node)
+			     (mapcar #'car
+				     (cdr (assoc node *congestion-city-nodes*))))
+			   *visited-nodes*)))))
+
+(defun known-city-edges ()
+  (mapcar (lambda (node)
+	    (cons node (mapcar (lambda (x)
+				 (if (member (car x) *visited-nodes*)
+				     x
+				     (list (car x))))
+			       (cdr (assoc node *congestion-city-edges*)))))
+	  *visited-nodes*))
+
+;; mapcan function
+(defun ingredients (order)
+  (mapcan (lambda (burger)
+	    (case burger
+	      (single '(patty))
+	      (double '(patty patty))
+	      (double-cheese '(patty patty cheese))))
+	  order))
+
+(ingredients '(single double-cheese double))
+
+;; Drawing only the known parts of the city
+
+;; to be continued
+

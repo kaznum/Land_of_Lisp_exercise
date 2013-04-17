@@ -197,6 +197,53 @@
 (new-game)
 
 ;; Walking Around Town
+(defun walk (pos)
+  (handle-direction pos nil))
 
-;; to be continued
+(defun charge (pos)
+  (handle-direction pos t))
+
+(defun handle-direction (pos charging)
+  (let ((edge (assoc pos
+		     (cdr (assoc *player-pos* *congestion-city-edges*)))))
+    (if edge
+	(handle-new-place edge pos charging)
+	(princ "That location does not exist!"))))
+
+(defun handle-new-place (edge pos charging)
+  (let* ((node (assoc pos *congestion-city-nodes*))
+	 (has-worm (and (member 'glow-worm node)
+			(not (member pos *visited-nodes*)))))
+    (pushnew pos *visited-nodes*)
+    (setf *player-pos* pos)
+    (draw-known-city)
+    (cond ((member 'cops edge) (princ "You ran into the cops. Game Over."))
+	  ((member 'wumpus node) (if charging
+				     (princ "You found the Wumpus!")
+				     (princ "You ran into the Wumpus!")))
+	  (charging (princ "You wasted your last bullet. Game Over."))
+	  (has-worm (let ((new-pos (random-node)))
+		      (princ "You ran into a Glow Worm Gang! You're now at ")
+		      (princ new-pos)
+		      (handle-new-place nil new-pos nil))))))
+
+;; TEST
+(new-game)
+(walk 15)
+(walk 20)
+(walk 16)
+(walk 5)
+(walk 2)
+(walk 5)
+(walk 17)
+(walk 23)
+(walk 17)
+(walk 5)
+(walk 16)
+(walk 20)
+(walk 15)
+(walk 30)
+(walk 24)
+(walk 29)
+(walk 11)
 

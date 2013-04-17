@@ -154,8 +154,10 @@
 	   (append *visited-nodes*
 		   (mapcan (lambda (node)
 			     (mapcar #'car
-				     (cdr (assoc node *congestion-city-nodes*))))
+				     (cdr (assoc node *congestion-city-edges*))))
 			   *visited-nodes*)))))
+
+(known-city-nodes)
 
 (defun known-city-edges ()
   (mapcar (lambda (node)
@@ -165,6 +167,8 @@
 				     (list (car x))))
 			       (cdr (assoc node *congestion-city-edges*)))))
 	  *visited-nodes*))
+
+(known-city-edges)
 
 ;; mapcan function
 (defun ingredients (order)
@@ -178,6 +182,21 @@
 (ingredients '(single double-cheese double))
 
 ;; Drawing only the known parts of the city
+
+(defun draw-known-city ()
+  (ugraph->png "known-city" (known-city-nodes) (known-city-edges)))
+
+(defun new-game ()
+  (setf *congestion-city-edges* (make-city-edges))
+  (setf *congestion-city-nodes* (make-city-nodes *congestion-city-edges*))
+  (setf *player-pos* (find-empty-node))
+  (setf *visited-nodes* (list *player-pos*))
+  (draw-city)
+  (draw-known-city))
+
+(new-game)
+
+;; Walking Around Town
 
 ;; to be continued
 

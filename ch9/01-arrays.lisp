@@ -21,3 +21,4 @@ foo
 foo
 
 ;; Arrays vs. Lists
+(nth 1 '(foo bar baz))

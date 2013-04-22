@@ -24,5 +24,15 @@
 
 ;; When to use Structures
 
-;; to be continued
+(defun make-person (name age waist-size favorite-color)
+  (list name age waist-size favorite-color))
+
+
+(defun person-age (person)
+  (cadr person))
+
+(defparameter *bob* (make-person "Bob" 35 32 "blue"))
+*bob*
+(person-age *bob*)
+
 

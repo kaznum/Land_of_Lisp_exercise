@@ -51,6 +51,27 @@
      "this is a string")
 
 ;; Two More Important Sequence Functions
+(subseq "america" 2 6)
 
-;; to be continued
+(sort '(3 5 2 9 6 7 1) #'<)
+
+;; Creating Your Own Generic Functions with Type Predicates
+
+(numberp 5)
+(defun add (a b)
+  (cond ((and (numberp a) (numberp b)) (+ a b))
+	((and (listp a) (listp b)) (append a b))))
+
+(add 3 4)
+(add '(a b) '(c d))
+
+(defmethod gadd ((a number) (b number))
+  (+ a b))
+
+(defmethod gadd ((a list) (b list))
+  (append a b))
+
+(gadd 3 4)
+(gadd '(a b) '(c d))
+
 

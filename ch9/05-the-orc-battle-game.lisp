@@ -57,7 +57,31 @@
   (princ ", and a strength of ")
   (princ *player-strength*))
 
+(defun player-attack ()
+  (fresh-line)
+  (princ "Attack style: [s]tab [d]ouble swing [r]oundhouse: ")
+  (case (read)
+    (s (monster-hit (pick-monster)
+		    (+ 2 (randval (ash *player-strength* -1)))))
+    (d (let ((x (randval (truncate (/ *player-strength* 6)))))
+	 (princ "Your double swing has a strength of ")
+	 (princ x)
+	 (fresh-line)
+	 (monster-hit (pick-monster) x)
+	 (unless (monsters-dead)
+	   (monster-hit (pick-monster) x))))
+    (otherwise (dotimes (x (1+ (randval (truncate (/ *player-strength* 3)))))
+		 (unless (monsters-dead)
+		   (monster-hit (random-monster) 1))))))
 
+(defun randval (n)
+  (1+ (random (max 1 n))))
+
+(dotimes (i 10)
+  (princ (random 5))
+  (princ " "))
+
+;; Helper Functions for Player Attacks
 
 ;; to be continue
 

@@ -4,7 +4,7 @@
 (defparameter *player-strength* nil)
 
 (defparameter *monsters* nil)
-(defparameter *monstaer-builders* nil)
+(defparameter *monster-builders* nil)
 (defparameter *monster-num* 12)
 
 ;; Main Game Functions
@@ -136,8 +136,53 @@
 	 *monsters*)))
 
 ;; Monsters
+(defstruct monster (health (randval 10)))
+
+(make-monster)
+(defmethod monster-hit (m x)
+  (decf (monster-health m) x)
+  (if (monster-dead m)
+      (progn (princ "You killed the ")
+	     (princ (type-of m))
+	     (princ "! "))
+      (progn (princ "You hit the ")
+	     (princ (type-of m))
+	     (princ ", knocking off ")
+	     (princ x)
+	     (princ " health points! "))))
+
+
+(type-of 'foo)
+(type-of 1)
+;; bit
+(type-of 5)
+(type-of "foo")
+(type-of (make-monster))
+
+(defmethod monster-show (m)
+  (princ "A fierce ")
+  (princ (type-of m)))
+
+;; Currently the following method is a placeholder
+(defmethod monster-attack (m))
+
+;; The Wicked Orc
+(defstruct (orc (:include monster)) (club-level (randval 8)))
+(push #'make-orc *monster-builders*)
+
+(defmethod monster-show ((m orc))
+  (princ "A wicked orc with a level ")
+  (princ (orc-club-level m))
+  (princ " club"))
+
+(defmethod monster-attack ((m orc))
+  (let ((x (randval (orc-club-level m))))
+    (princ "An orc swings his club at you and knocks off ")
+    (princ x)
+    (princ " of your health points. ")
+    (decf *player-health* x)))
+
+;; The Malicious Hydra
 
 ;; to be continue
-
-
 

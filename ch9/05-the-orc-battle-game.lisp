@@ -132,7 +132,7 @@
 	       (progn (princ "(health=")
 		      (princ (monster-health m))
 		      (princ ") ")
-		      (show-monster m))))
+		      (monster-show m))))
 	 *monsters*)))
 
 ;; Monsters
@@ -196,7 +196,7 @@
       (princ "The corpse of the fully deprecated and decapacitated hydra falls to the floor!")
       (progn (princ "You lop off ")
 	     (princ x)
-	     (princ " of the hydra's heads"))))
+	     (princ " of the hydra's heads! "))))
 
 (defmethod monster-attack ((m hydra))
   (let ((x (randval (ash (monster-health m) -1))))
@@ -224,7 +224,7 @@
       (princ "It also squirts in your face, taking away a health point! ")
       (decf *player-health*))))
 
-(defstruct brigand (:include monster))
+(defstruct (brigand (:include monster)))
 (push #'make-brigand *monster-builders*)
 (defmethod monster-attack ((m brigand))
   (let ((x (max *player-health* *player-agility* *player-strength*)))
@@ -239,6 +239,5 @@
 	   (decf *player-strength* 2)))))
 
 ;; To Battle!
-
-;; to be continue
+(orc-battle)
 

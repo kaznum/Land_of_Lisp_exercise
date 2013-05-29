@@ -89,6 +89,19 @@
 *child*
 
 ;; Simulating a Day in Our World
+(defun update-world ()
+  (setf *animals* (remove-if (lambda (animal)
+			       (<= (animal-energy animal) 0))
+			     *animals*))
+  (mapc (lambda (animal)
+	  (turn animal)
+	  (move animal)
+	  (eat animal)
+	  (reproduce animal))
+	*animals*)
+  (add-plants))
+
+;; Drawing Our World
 
 ;; to be continued
 

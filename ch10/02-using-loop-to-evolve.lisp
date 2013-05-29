@@ -58,6 +58,13 @@
 	    (mod (+ (animal-dir animal) (angle (animal-genes animal) x)) 8)))))
 
 ;; Handling Animal Eating
+(defun eat (animal)
+  (let ((pos (cons (animal-x animal) (animal-y animal))))
+    (when (gethash pos *plants*)
+      (incf (aniaml-energy animal) *plant-energy*)
+      (remhash pos *plants*))))
+
+;; Handling Animal Reproduction
 
 ;; to be continued
 

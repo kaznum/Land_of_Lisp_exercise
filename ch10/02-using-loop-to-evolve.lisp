@@ -65,6 +65,8 @@
       (remhash pos *plants*))))
 
 ;; Handling Animal Reproduction
+(defparameter *reproduction-energy* 200)
+
 (defun reproduce (animal)
   (let ((e (animal-energy animal)))
     (when (>= e *reproduction-energy*)

@@ -48,7 +48,7 @@
 
 ;; Handling Animal Turning
 (defun turn (animal)
-  (let (x (random (apply #'+ (animal-genes animal))))
+  (let ((x (random (apply #'+ (animal-genes animal)))))
     (labels ((angle (genes x)
 	       (let ((xnu (- x (car genes))))
 		 (if (< xnu 0)
@@ -119,9 +119,10 @@
 		 (princ "|"))))
 
 ;; Creating a User Interface
-(defun evaluation ()
+(defun evolution ()
   (draw-world)
   (fresh-line)
+  (princ "...")
   (let ((str (read-line)))
     (cond ((equal str "quit") ())
 	  (t (let ((x (parse-integer str :junk-allowed t)))
@@ -132,8 +133,9 @@
 		      if (zerop (mod i 1000))
 		      do (princ #\.))
 		   (update-world))
-	       (evaluation))))))
+	       (evolution))))))
 
 ;; Let's Watch Some Evaluation
+(evolution)
 ;; to be continued
 

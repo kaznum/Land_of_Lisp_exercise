@@ -61,7 +61,7 @@
 (defun eat (animal)
   (let ((pos (cons (animal-x animal) (animal-y animal))))
     (when (gethash pos *plants*)
-      (incf (aniaml-energy animal) *plant-energy*)
+      (incf (animal-energy animal) *plant-energy*)
       (remhash pos *plants*))))
 
 ;; Handling Animal Reproduction
@@ -71,7 +71,7 @@
   (let ((e (animal-energy animal)))
     (when (>= e *reproduction-energy*)
       (setf (animal-energy animal) (ash e -1))
-      (let ((animal-nu (copy-structure aniaml))
+      (let ((animal-nu (copy-structure animal))
 	    (genes (copy-list (animal-genes animal)))
 	    (mutation (random 8)))
 	(setf (nth mutation genes) (max 1 (+ (nth mutation genes) (random 3) -1)))

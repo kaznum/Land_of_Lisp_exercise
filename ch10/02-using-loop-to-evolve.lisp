@@ -47,6 +47,17 @@
 
 
 ;; Handling Animal Turning
+(defun turn (animal)
+  (let (x (random (apply #'+ (animal-genes animal))))
+    (labels ((angle (genes x)
+	       (let ((xnu (- x (car genes))))
+		 (if (< xnu 0)
+		     0
+		     (1+ (angle (cdr genes) xnu))))))
+      (setf (animal-dir animal)
+	    (mod (+ (animal-dir animal) (angle (animal-genes animal) x)) 8)))))
+
+;; Handling Animal Eating
 
 ;; to be continued
 

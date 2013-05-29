@@ -138,5 +138,4 @@
 
 ;; Let's Watch Some Evaluation
 (evolution)
-;; to be continued
 

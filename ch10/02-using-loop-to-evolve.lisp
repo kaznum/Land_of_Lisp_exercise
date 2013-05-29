@@ -102,6 +102,23 @@
   (add-plants))
 
 ;; Drawing Our World
+(defun draw-world ()
+  (loop for y
+       below *height*
+       do (progn (fresh-line)
+		 (princ "|")
+		 (loop for x
+		      below *width*
+		      do (princ (cond ((some (lambda (animal)
+					       (and (= (animal-x animal) x)
+						    (= (animal-y animal) y)))
+					     *animals*)
+				       #\M)
+				      ((gethash (cons x y) *plants*) #\*)
+				      (t #\space))))
+		 (princ "|"))))
+
+;; Creating a User Interface
 
 ;; to be continued
 

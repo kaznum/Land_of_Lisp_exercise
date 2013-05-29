@@ -119,6 +119,21 @@
 		 (princ "|"))))
 
 ;; Creating a User Interface
+(defun evaluation ()
+  (draw-world)
+  (fresh-line)
+  (let ((str (read-line)))
+    (cond ((equal str "quit") ())
+	  (t (let ((x (parse-integer str :junk-allowed t)))
+	       (if x
+		   (loop for i
+		      below x
+		      do (update-world)
+		      if (zerop (mod i 1000))
+		      do (princ #\.))
+		   (update-world))
+	       (evaluation))))))
 
+;; Let's Watch Some Evaluation
 ;; to be continued
 

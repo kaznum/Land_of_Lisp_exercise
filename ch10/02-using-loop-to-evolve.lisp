@@ -65,6 +65,30 @@
       (remhash pos *plants*))))
 
 ;; Handling Animal Reproduction
+(defun reproduce (animal)
+  (let ((e (animal-energy animal)))
+    (when (>= e *reproduction-energy*)
+      (setf (animal-energy animal) (ash e -1))
+      (let ((animal-nu (copy-structure aniaml))
+	    (genes (copy-list (animal-genes animal)))
+	    (mutation (random 8)))
+	(setf (nth mutation genes) (max 1 (+ (nth mutation genes) (random 3) -1)))
+	(setf (animal-genes animal-nu) genes)
+	(push animal-nu *animals*)))))
+
+
+;; copy-structure test
+(defparameter *parent* (make-animal :x 0
+				    :y 0
+				    :energy 0
+				    :dir 0
+				    :genes '(1 1 1 1 1 1 1 1)))
+(defparameter *child* (copy-structure *parent*))
+(setf (nth 2 (animal-genes *parent*)) 10)
+*parent*
+*child*
+
+;; Simulating a Day in Our World
 
 ;; to be continued
 

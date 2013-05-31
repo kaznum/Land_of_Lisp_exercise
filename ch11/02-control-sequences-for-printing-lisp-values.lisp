@@ -12,10 +12,3 @@
 (format t "I am printing ~,,4,'!a in the middle of this sentence." "foo")
 (format t "I am printing ~,,4,'!@a in the middle of this sentence." "foo")
 
-
-
-
-
-
-
-

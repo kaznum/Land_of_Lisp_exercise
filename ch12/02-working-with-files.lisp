@@ -13,3 +13,8 @@
     (read my-stream))
 
 
+(with-open-file (my-stream "data.txt" :direction :output :if-exists :error)
+  (print "my data" my-stream))
+
+(with-open-file (my-stream "data.txt" :direction :output :if-exists :supersede)
+  (print "my data" my-stream))

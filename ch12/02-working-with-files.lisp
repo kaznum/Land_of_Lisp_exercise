@@ -18,3 +18,4 @@
 
 (with-open-file (my-stream "data.txt" :direction :output :if-exists :supersede)
   (print "my data" my-stream))
+

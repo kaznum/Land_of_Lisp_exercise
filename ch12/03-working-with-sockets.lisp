@@ -15,6 +15,10 @@
 (read my-stream) ;; client
 
 ;; Tyding Up After Ourselves
-;;
-;; to be continued
+
+(close my-stream) ;; client
+(close my-stream) ;; server
+(socket-server-close my-stream) ;; server
+
+
 

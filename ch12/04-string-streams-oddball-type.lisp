@@ -4,6 +4,17 @@
 (get-output-stream-string foo)
 
 ;; Sending Streams to Functions
+;;; no example
 
-;; to be continued
+;; Working with Long Strings
+;;; no example
+
+;; Reading and Debugging
+(with-output-to-string (*standard-output*)
+  (princ "the sum of ")
+  (princ 5)
+  (princ " and ")
+  (princ 2)
+  (princ " is ")
+  (princ (+ 2 5)))
 

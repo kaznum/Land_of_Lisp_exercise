@@ -9,6 +9,14 @@
 (error 'foo)
 
 ;; Intercepting Conditions
+(defun bad-function ()
+  (error 'foo))
+
+(handler-case (bad-function)
+  (foo () "somebody signaled foo!")
+  (bar () "somebody signaled bar!"))
+
+;; Protecting Resources Against Unexpected Conditions
 
 ;; to be continued
 

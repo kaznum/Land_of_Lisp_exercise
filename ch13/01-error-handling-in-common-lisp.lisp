@@ -17,6 +17,6 @@
   (bar () "somebody signaled bar!"))
 
 ;; Protecting Resources Against Unexpected Conditions
-
-;; to be continued
+(unwind-protect (/ 1 0)
+  (princ "I need to say 'flubyduby' matter what"))
 

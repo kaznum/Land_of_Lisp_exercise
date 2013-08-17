@@ -22,5 +22,9 @@
 
 (decode-param "foo")
 (decode-param "foo%3F")
+(decode-param "foo+bar")
+
+;; Decoding Lists of Request Parameters
+
 
 ;; to be continued

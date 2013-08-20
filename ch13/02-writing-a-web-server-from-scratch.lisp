@@ -26,5 +26,19 @@
 
 ;; Decoding Lists of Request Parameters
 
+;; intern converts a string to a symbol
+(defun parse-params (s)
+  (let* ((i1 (position #\= s))
+	 (i2 (position #\& s)))
+    (cond (i1 (cons (cons (intern (string-upcase (subseq s 0 i1)))
+			  (decode-param (subseq s (1+ i1) i2)))
+		    (and i2 (parse-params (subseq s (1+ i2))))))
+	  ((equal s "") nil)
+	  (t s))))
+
+(parse-params "name=bob&age=25&gender=male")
+(parse-params "name=bob&age=25&gender=ma%3Fle")
+
+;; Parsing the Request Header
 
 ;; to be continued

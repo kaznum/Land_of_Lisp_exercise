@@ -41,4 +41,19 @@
 
 ;; Parsing the Request Header
 
+;; Example: "GET /hello.html HTTP/1.1"
+(defun parse-url (s)
+  (let* ((url (subseq s
+		      (+ 2 (position #\space s))
+		      (position #\space s :from-end t)))
+	 (x (position #\? url)))
+    (if x
+	(cons (subseq url 0 x) (parse-params (subseq url (1+ x))))
+	(cons url '()))))
+
+(parse-url "GET /lolcats.html HTTP/1.1")
+(parse-url "GET /lolcats.html?extract-funny=yes HTTP/1.1")
+
+
+
 ;; to be continued

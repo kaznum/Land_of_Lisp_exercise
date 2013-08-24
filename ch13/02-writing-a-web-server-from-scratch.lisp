@@ -54,6 +54,15 @@
 (parse-url "GET /lolcats.html HTTP/1.1")
 (parse-url "GET /lolcats.html?extract-funny=yes HTTP/1.1")
 
+(defun get-header (stream)
+  (let* ((s (read-line stream))
+	 (h (let ((i (position #\: s)))
+	      (when i
+		(cons (intern (string-upcase (subseq s 0 1)))
+		      (subseq s (+ i 2)))))))
+    (when h
+      (cons h (get-header stream)))))
 
+;; Testing get-header with a String Stream
 
 ;; to be continued

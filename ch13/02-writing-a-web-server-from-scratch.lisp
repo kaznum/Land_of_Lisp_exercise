@@ -58,11 +58,17 @@
   (let* ((s (read-line stream))
 	 (h (let ((i (position #\: s)))
 	      (when i
-		(cons (intern (string-upcase (subseq s 0 1)))
+		(cons (intern (string-upcase (subseq s 0 i)))
 		      (subseq s (+ i 2)))))))
     (when h
       (cons h (get-header stream)))))
 
 ;; Testing get-header with a String Stream
+(get-header (make-string-input-stream "foo: 1
+bar: abc, 123
+
+"))
+
+;; Parsing the Request Body
 
 ;; to be continued

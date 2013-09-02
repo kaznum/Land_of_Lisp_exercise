@@ -14,4 +14,8 @@
 (hello-request-handler "greeting" '() '((name . "Bob")))
 
 ;; Launching the Website
-;; to be continued
+
+;; The followings should be in REPL
+(load "02-writing-a-web-server-from-scratch")
+(load "03-building-a-dynamic-website")
+(serve #'hello-request-handler)

@@ -70,5 +70,13 @@ bar: abc, 123
 "))
 
 ;; Parsing the Request Body
+(defun get-content-params (stream header)
+  (let ((length (cdr (assoc 'content-length header))))
+    (when length
+      (let ((content (make-string (parse-integer length))))
+	(read-sequence content stream)
+	(parse-params content)))))
+
+;; Our Grand Finale: The serve Function!
 
 ;; to be continued

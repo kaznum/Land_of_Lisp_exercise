@@ -15,5 +15,9 @@
 
 (add-two '(4 7 2 3))
 
-;; to be continued
+;; Higher-Order Programming to the Rescue
+(mapcar (lambda (x)
+	  (+ x 2))
+	'(4 7 2 3))
+
 

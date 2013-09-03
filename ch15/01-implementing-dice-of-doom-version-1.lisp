@@ -7,5 +7,17 @@
 
 ;; Representing the Game Board
 
+;; functional
+(defun board-array (lst)
+  (make-array *board-hexnum* :initial-contents lst))
+
+;; imperative
+(defun gen-board ()
+  (board-array (loop for n below *board-hexnum*
+		    collect (list (random *num-players*)
+				  (1+ (random *max-dice*))))))
+
+(gen-board)
+
 ;; to be continued
 

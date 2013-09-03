@@ -44,6 +44,21 @@
 (draw-board #((0 3) (0 3) (1 3) (1 1)))
 
 ;; Decoupling dice of Doom's rules from the Rest of the Game
+;;;; no code
+
+;; Generating a Game Tree
+
+;; functional
+(defun game-tree (board player spare-dice first-move)
+  (list player
+	board
+	(add-passing-move board
+			  player
+			  first-move
+			  (attacking-moves board player spare-dice))))
+
+;; Calculating Passing Moves
+
 
 ;; to be continued
 

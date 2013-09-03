@@ -9,6 +9,11 @@
 *my-list*
 
 ;; Using the Functional Style
+(defun add-two (list)
+  (when list
+    (cons (+ 2 (car list)) (add-two (cdr list)))))
+
+(add-two '(4 7 2 3))
 
 ;; to be continued
 

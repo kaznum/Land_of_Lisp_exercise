@@ -147,5 +147,16 @@
 (game-tree #((0 1) (1 1) (0 2) (1 1)) 0 0 t)
 
 
+;; Playing Dice of Doom Against Another Human
+
+;;; The main loop
+;;;; imperative
+(defun play-vs-human (tree)
+  (print-info tree)
+  (if (caddr tree)
+      (play-vs-human (handle-human tree))
+      (anounce-winner (cadr tree))))
+
+
 ;; to be continued
 

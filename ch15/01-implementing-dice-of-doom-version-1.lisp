@@ -94,6 +94,26 @@
 	    (loop for n below *board-hexnum*
 		 collect n))))
 
+;; Finding the Neighbors
+(defun neighbors (pos)
+  (let ((up (- pos *board-size*))
+	(down (+ pos *board-size*)))
+    (loop for p in (append (list up down)
+			   (unless (zerop (mod pos *board-size*))
+			     (list (1- up) (1- pos)))
+			   (unless (zerop (mod (1+ pos) *board-size*))
+			     (list (1+ pos) (1+ down))))
+       when (and (>= p 0) (< p *board-hexnum*))
+	 collect p)))
+
+
+(neighbors 0)
+(neighbors 1)
+(neighbors 2)
+(neighbors 3)
+
+;; Attacking
+
 
 ;; to be continued
 

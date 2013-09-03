@@ -54,6 +54,7 @@
 	board
 	(add-passing-move board
 			  player
+			  spare-dice
 			  first-move
 			  (attacking-moves board player spare-dice))))
 
@@ -125,6 +126,26 @@
 (board-attack #((0 3) (0 3) (1 3) (1 1)) 0 1 3 3)
 
 ;; Reinforcements
+
+;;; functional
+(defun add-new-dice (board player spare-dice)
+  (labels ((f (lst n)
+	     (cond ((null lst) nil)
+		   ((zerop n) lst)
+		   (t (let ((cur-player (caar lst))
+			    (cur-dice (cadar lst)))
+			(if (and (eq cur-player player) (< cur-dice *max-dice*))
+			    (cons (list cur-player (1+ cur-dice))
+				  (f (cdr lst) (1- n)))
+			    (cons (car lst) (f (cdr lst) n))))))))
+    (board-array (f (coerce board 'list) spare-dice))))
+
+(add-new-dice #((0 1) (1 3) (0 2) (1 1)) 0 2)
+(add-new-dice #((0 3) (1 3) (0 2) (1 1)) 0 2)
+
+;; Trying Out our New game-tree Function
+(game-tree #((0 1) (1 1) (0 2) (1 1)) 0 0 t)
+
 
 ;; to be continued
 

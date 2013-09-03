@@ -28,5 +28,22 @@
 (player-letter 3)
 
 
+;; Imperative
+(defun draw-board (board)
+  (loop for y below *board-size*
+       do (progn (fresh-line)
+		 (loop repeat (- *board-size* y)
+		      do (princ "   "))
+		 (loop for x below *board-size*
+		      for hex = (aref board (+ x (* *board-size* y)))
+		      do (format t "~a-~a "
+				 (player-letter (first hex))
+				 (second hex))))))
+
+
+(draw-board #((0 3) (0 3) (1 3) (1 1)))
+
+;; Decoupling dice of Doom's rules from the Rest of the Game
+
 ;; to be continued
 

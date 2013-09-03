@@ -59,6 +59,41 @@
 
 ;; Calculating Passing Moves
 
+;; Functional
+
+(defun add-passing-move (board player spare-dice first-move moves)
+  (if first-move
+      moves
+      (cons (list nil
+		  (game-tree (add-new-dice board player (1- spare-dice))
+			     (mod (1+ player) *num-players*)
+			     0
+			     t))
+	    moves)))
+
+;; Calculating Attacking Moves
+
+;; Functional
+(defun attacking-moves (board cur-player spare-dice)
+  (labels ((player (pos)
+	     (car (aref board pos)))
+	   (dice (pos)
+	     (cadr (aref board pos))))
+    (mapcan (lambda (src)
+	      (when (eq (player src) cur-player)
+		(mapcan (lambda (dst)
+			  (when (and (not (eq (player dst) cur-player))
+				     (> (dice src) (dice dst)))
+			    (list
+			     (list (list src dst)
+				   (game-tree (board-attack board cur-player src dst (dice src))
+					      cur-player
+					      (+ spare-dice (dice dst))
+					      nil)))))
+			(neighbors src))))
+	    (loop for n below *board-hexnum*
+		 collect n))))
+
 
 ;; to be continued
 

@@ -165,6 +165,24 @@
   (draw-board (cadr tree)))
 
 ;;; Handling Input from Human Players
+;;;; imperative
+(defun handle-human (tree)
+  (fresh-line)
+  (princ "choose your move:")
+  (let ((moves (caddr tree)))
+    (loop for move in moves
+	 for n from 1
+	 do (let ((action (car move)))
+	      (fresh-line)
+	      (format t "~a.  " n)
+	      (if action
+		  (format t "~a -> ~a" (car action) (cadr action))
+		  (princ "end turn"))))
+    (fresh-line)
+    (cadr (nth (1- (read)) moves))))
+
+;;; Determining the Winner
+
 
 ;; to be continued
 

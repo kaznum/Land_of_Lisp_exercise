@@ -19,5 +19,14 @@
 
 (gen-board)
 
+;; functional
+(defun player-letter (n)
+  (code-char (+ 97 n)))
+
+(player-letter 0)
+(player-letter 1)
+(player-letter 3)
+
+
 ;; to be continued
 

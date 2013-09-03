@@ -157,6 +157,14 @@
       (play-vs-human (handle-human tree))
       (anounce-winner (cadr tree))))
 
+;;; Giving Information About the State of the Game
+;;;; imperative
+(defun print-info (tree)
+  (fresh-line)
+  (format t "current player = ~a" (player-letter (car tree)))
+  (draw-board (cadr tree)))
+
+;;; Handling Input from Human Players
 
 ;; to be continued
 

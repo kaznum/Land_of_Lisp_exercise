@@ -114,6 +114,17 @@
 
 ;; Attacking
 
+;; functional
+(defun board-attack (board player src dst dice)
+  (board-array (loop for pos
+		    for hex across board
+		    collect (cond ((eq pos src) (list player 1))
+				  ((eq pos dst) (list player (1- dice)))
+				  (t hex)))))
+
+(board-attack #((0 3) (0 3) (1 3) (1 1)) 0 1 3 3)
+
+;; Reinforcements
 
 ;; to be continued
 

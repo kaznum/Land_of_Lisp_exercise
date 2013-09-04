@@ -17,6 +17,14 @@
   (* foo foo))
 
 ;; Macro Expansion
+;;; no code
+
+;; How Macros Are Transformed
+(let1 foo (+ 2 3)
+  (princ "Lisp is awesome!")
+  (* foo foo))
+
+;; Using the Simple Macro
 
 ;; to be continued
 

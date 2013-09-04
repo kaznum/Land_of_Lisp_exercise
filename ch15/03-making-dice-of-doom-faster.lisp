@@ -226,6 +226,15 @@
 
 ;; Memoization
 ;;; Memoizing the neighbors Function
+(neighbors 0)
+
+(let ((old-neighbors (symbol-function 'neighbors))
+      (previous (make-hash-table)))
+  (defun neighbors (pos)
+    (or (gethash pos previous)
+	(setf (gethash pos previous) (funcall old-neighbors pos)))))
+
+;; Memoizing the Game Tree
 
 
 ;; to be continued

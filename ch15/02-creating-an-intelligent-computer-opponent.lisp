@@ -188,11 +188,26 @@
 	      (/ 1 (length w))
 	      0)))))
 
+;;;; functional
 (defun get-ratings (tree player)
   (mapcar (lambda (move)
 	    (rate-position (cadr move) player))
 	  (caddr tree)))
 
 ;;; Creatting a Game Loop with an AI Player
+;;;; functional
+(defun handle-computer (tree)
+  (let ((ratings (get-ratings tree (car tree))))
+    (cadr (nth (position (apply #'max ratings) ratings) (caddr tree)))))
+
+;;;; Imperative
+(defun play-vs-computer (tree)
+  (print-info tree)
+  (cond ((null (caddr tree)) (announce-winner (cadr tree)))
+	((zerop (car tree)) (play-vs-computer (handle-human tree)))
+	(t (play-vs-computer (handle-computer tree)))))
+
+
+;; Play Our First Human vs. Computer
 
 ;; to be continued

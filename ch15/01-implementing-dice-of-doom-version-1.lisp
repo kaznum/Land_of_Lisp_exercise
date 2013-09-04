@@ -203,5 +203,6 @@
 	(format t "The game is a tie between ~a" (mapcar #'player-letter w))
 	(format t "The winner is ~a" (player-letter (car w))))))
 
+;;; Trying Out the Human vs. Human Version of Dice of Doom
+(play-vs-human (game-tree (gen-board) 0 0 t))
 
-;; to be continued

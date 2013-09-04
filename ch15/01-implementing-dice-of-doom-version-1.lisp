@@ -182,7 +182,26 @@
     (cadr (nth (1- (read)) moves))))
 
 ;;; Determining the Winner
+;;;; functional
+(defun winners (board)
+  (let* ((tally (loop for hex across board
+		     collect (car hex)))
+	 (totals (mapcar (lambda (player)
+			   (cons player (count player tally)))  ;; player->count pair
+			 (remove-duplicates tally)))  ;; players list
+	 (best (apply #'max (mapcar #'cdr totals))))
+    (mapcar #'car
+	    (remove-if (lambda (x)
+			 (not (eq (cdr x) best)))
+		       totals))))
+
+;;;; imperative
+(defun announce-winner (board)
+  (fresh-line)
+  (let ((w (winners board)))
+    (if (> (length w) 1)
+	(format t "The game is a tie between ~a" (mapcar #'player-letter w))
+	(format t "The winner is ~a" (player-letter (car w))))))
 
 
 ;; to be continued
-

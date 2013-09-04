@@ -242,6 +242,16 @@
 	(setf (gethash rest previous) (apply old-game-tree rest)))))
 
 ;;; Memoizing the rate-position Function
+(let ((old-rate-position (symbol-function 'rate-position))
+      (previous (make-hash-table)))
+  (defun rate-position (tree player)
+    (let ((tab (gethash player previous)))
+      (unless tab
+	(setf tab (setf (gethash player previous) (make-hash-table))))
+      (or (gethash tree tab)
+	  (setf (gethash tree tab)
+		(funcall old-rate-position tree player))))))
 
+;; Tail Call Optimization
 ;; to be continued
 

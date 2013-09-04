@@ -155,7 +155,7 @@
   (print-info tree)
   (if (caddr tree)
       (play-vs-human (handle-human tree))
-      (anounce-winner (cadr tree))))
+      (announce-winner (cadr tree))))
 
 ;;; Giving Information About the State of the Game
 ;;;; imperative

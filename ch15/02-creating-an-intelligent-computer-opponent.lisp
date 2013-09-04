@@ -209,5 +209,4 @@
 
 
 ;; Play Our First Human vs. Computer
-
-;; to be continued
+;;(play-vs-computer (game-tree (gen-board) 0 0 t))

@@ -253,5 +253,31 @@
 		(funcall old-rate-position tree player))))))
 
 ;; Tail Call Optimization
+
+(defun my-length (lst)
+  (if lst
+      (1+ (my-length (cdr lst)))
+      0))
+
+(my-length '(1 2 3))
+
+(defun my-length (lst)
+  (labels ((f (lst acc)
+	     (if lst
+		 (f (cdr lst) (1+ acc))
+		 acc)))
+    (f lst 0)))
+
+(my-length '(1 2 3))
+
+;;; Support for Tail Calls in Common Lisp
+(compile 'my-length)
+
+(defparameter *biglist* (loop for i below 100000 collect 'x))
+(my-length *biglist*)
+
+;;; Tail Call Optimization in Dice of Doom
+
+
 ;; to be continued
 

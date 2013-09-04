@@ -235,7 +235,13 @@
 	(setf (gethash pos previous) (funcall old-neighbors pos)))))
 
 ;; Memoizing the Game Tree
+(let ((old-game-tree (symbol-function 'game-tree))
+      (previous (make-hash-table :test #'equalp)))
+  (defun game-tree (&rest rest)  ;; &rest is the keyword that means the all rest of arguments
+    (or (gethash rest previous)
+	(setf (gethash rest previous) (apply old-game-tree rest)))))
 
+;; Memoizing the rate-position Function
 
 ;; to be continued
 

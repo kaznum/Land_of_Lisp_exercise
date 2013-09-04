@@ -25,6 +25,14 @@
   (* foo foo))
 
 ;; Using the Simple Macro
+(defun add (a b)
+  (let1 x (+ a b)
+    (format t "The sum is ~a" x)
+    x))
 
-;; to be continued
+(add 1 2)
+
+(macroexpand '(let1 foo (+ 2 3)
+	       (* foo foo)))
+
 

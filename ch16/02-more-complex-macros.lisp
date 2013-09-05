@@ -57,5 +57,30 @@
        (format t "This cannot be split."))
 
 ;; Avoiding Variable Caputure
+(let1 x 100
+  (split '(2 3)
+	 (+ x head)
+	 nil))
+
+(macroexpand '(split '(2 3)
+	       (+ x head)
+	       nil))
+
+(gensym)
+
+(defmacro split (val yes no)
+  (let1 g (gensym)
+    `(let1 ,g ,val
+       (if ,g
+	   (let ((head (car ,g))
+		 (tail (cdr ,g)))
+	     ,yes)
+	   ,no))))
+
+(macroexpand '(split '(2 3)
+	       (+ x head)
+	       nil))
+
+;; A Recursion Macro
 
 ;; to be continued

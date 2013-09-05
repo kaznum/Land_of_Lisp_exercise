@@ -82,5 +82,55 @@
 	       nil))
 
 ;; A Recursion Macro
+(defun my-length (lst)
+  (labels ((f (lst acc)
+	     (split lst
+		    (f tail (1+ acc))
+		    acc)))
+    (f lst 0)))
 
-;; to be continued
+;; 'recurse' has not been defined
+(recurse (n 9)
+	 (fresh-line)
+	 (if (zerop n)
+	     (princ "lift-off!")
+	     (progn (princ n)
+		    (self (1- n)))))
+
+(defun pairs (lst)
+  (labels ((f (lst acc)
+	     (split lst
+		    (if tail
+			(f (cdr tail) (cons (cons head (car tail)) acc))
+			(reverse acc))
+		    (reverse acc))))
+    (f lst nil)))
+
+(pairs '(a b c d e f))
+(pairs '(a b c d e f g)) ;; g is ignored
+
+(defmacro recurse (vars &body body)
+  (let1 p (pairs vars)
+    `(labels ((self ,(mapcar #'car p)
+		,@body))
+       (self ,@(mapcar #'cdr p)))))
+
+
+(defun my-length (lst)
+  (recurse (lst lst acc 0)
+	   (split lst
+		  (self tail (1+ acc))
+		  acc)))
+
+(my-length '(1 2 3 4 5))
+
+(macroexpand
+ '(recurse (lst lst acc 0)
+   (split lst
+    (self tail (1+ acc))
+    acc)))
+;;(LABELS ((SELF (LST ACC)
+;;	   (SPLIT LST
+;;		  (SELF TAIL (1+ ACC))
+;;		  ACC)))
+;;  (SELF LST 0))

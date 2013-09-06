@@ -95,5 +95,46 @@
      (circle '(100 . 100) 50 '(0 0 255)))
 
 ;; Building a More Complicated SVG Excample
+(defun polygon (points color)
+  (tag polygon (points (format nil
+			       "~{~a,~a ~}"
+			       (mapcan (lambda (tp)
+					 (list (car tp) (cdr tp)))
+				       points))
+		       style (svg-style color))))
 
-;; to be continued
+(mapcan (lambda (tp)
+	  (list (car tp) (cdr tp)))
+	'((1 . 2) (3 . 4) (5 . 6)))
+
+(mapcar (lambda (tp)
+	  (list (car tp) (cdr tp)))
+	'((1 . 2) (3 . 4) (5 . 6)))
+
+(defun random-walk (value length)
+  (unless (zerop length)
+    (cons value
+	  (random-walk (if (zerop (random 2))
+			   (1- value)
+			   (1+ value))
+		       (1- length)))))
+
+(random-walk 1 5)
+(random-walk 100 10)
+
+(with-open-file (*standard-output* "random_walk.svg"
+				   :direction :output
+				   :if-exists :supersede)
+  (svg (loop repeat 10
+	  do (polygon (append '((0 . 200))
+			      (loop for x
+				 for y in (random-walk 100 400)
+				 collect (cons x y))
+			      '((400 . 200)))
+		      (loop repeat 3
+			 collect (random 256))))))
+
+;; how to perform 'loop for x'
+(loop for x
+     for y in '(100 200 300 400)
+     collect (cons x y))

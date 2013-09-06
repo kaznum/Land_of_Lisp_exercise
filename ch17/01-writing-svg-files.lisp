@@ -49,5 +49,21 @@
 ;; </mytag>
 
 ;;; Using the tag Macro to Generate HTML
+(tag html ()
+  (tag body ()
+    (princ "Hello World!")))
+
+(defmacro html (&body body)
+  `(tag html ()
+     ,@body))
+(defmacro body (&body body)
+  `(tag body ()
+     ,@body))
+
+(html
+  (body
+    (princ "Hello World!")))
+
+;; Creating SVG-Specific Macros and Functions
 
 ;; to be continued

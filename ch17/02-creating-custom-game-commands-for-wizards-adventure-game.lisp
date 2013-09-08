@@ -72,6 +72,3 @@
 	     he hands you the magick low-carb donut- you win! the end.))))
 
 ;; Let's Try the Completed Wizard's Adventure Game!
-
-
-;; to be continued

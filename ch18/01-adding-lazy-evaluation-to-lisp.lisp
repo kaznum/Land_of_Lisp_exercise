@@ -64,5 +64,22 @@
   (not (force x)))
 
 ;; Converting Between Regular Lists and Lazy Lists
+(defun make-lazy (lst)
+  (lazy (when lst
+	  (cons (car lst) (make-lazy (cdr lst))))))
+
+(defun take (n lst)
+  (unless (or (zerop n) (lazy-null lst))
+    (cons (lazy-car lst) (take (1- n) (lazy-cdr lst)))))
+
+(defun take-all (lst)
+  (unless (lazy-null lst)
+    (cons (lazy-car lst) (take-all (lazy-cdr lst)))))
+
+(take 10 *integers*)
+(take 10 (make-lazy '(q w e r t y u i o p a s d f)))
+(take-all (make-lazy '(q w e r t y u i o p a s d f)))
+
+;; Mapping and Searching Across Lazy Lists
 
 ;; to be continued

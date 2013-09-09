@@ -34,5 +34,35 @@
 (force *bar*)
 
 ;; Creating a Lazy Lists Library
+(defmacro lazy-cons (a d)
+  `(lazy (cons ,a ,d)))
+
+(defun lazy-car (x)
+  (car (force x)))
+
+(defun lazy-cdr (x)
+  (cdr (force x)))
+
+(defparameter *foo* (lazy-cons 4 7))
+
+(lazy-car *foo*)
+(lazy-cdr *foo*)
+
+(defparameter *integers*
+  (labels ((f (n)
+	     (lazy-cons n (f (1+ n)))))
+    (f 1)))
+
+(lazy-car *integers*)
+(lazy-car (lazy-cdr *integers*))
+(lazy-car (lazy-cdr (lazy-cdr *integers*)))
+
+(defun lazy-nil ()
+  (lazy nil))
+
+(defun lazy-null (x)
+  (not (force x)))
+
+;; Converting Between Regular Lists and Lazy Lists
 
 ;; to be continued

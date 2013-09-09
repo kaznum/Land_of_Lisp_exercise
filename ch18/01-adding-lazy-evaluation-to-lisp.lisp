@@ -81,5 +81,45 @@
 (take-all (make-lazy '(q w e r t y u i o p a s d f)))
 
 ;; Mapping and Searching Across Lazy Lists
+(defun lazy-mapcar (fun lst)
+  (lazy (unless (lazy-null lst)
+	  (cons (funcall fun (lazy-car lst))
+		(lazy-mapcar fun (lazy-cdr lst))))))
 
-;; to be continued
+(defun lazy-mapcan (fun lst)
+  (labels ((f (lst-cur)
+	     (if (lazy-null lst-cur)
+		 (force (lazy-mapcan fun (lazy-cdr lst)))
+		 (cons (lazy-car lst-cur) (lazy (f (lazy-cdr lst-cur)))))))
+    (lazy (unless (lazy-null lst)
+	    (f (funcall fun (lazy-car lst)))))))
+
+
+(defun add1 (x)
+  (mapcar (lambda (y) (1+ y)) x))
+(mapcan 'add1  '((1 2 3) (4 5 6)))
+
+(defun lazy-find-if (fun lst)
+  (unless (lazy-null lst)
+    (let ((x (lazy-car lst)))
+      (if (funcall fun x)
+	  x
+	  (lazy-find-if fun (lazy-cdr lst))))))
+
+(defun lazy-nth (n lst)
+  (if (zerop n)
+      (lazy-car lst)
+      (lazy-nth (1- n) (lazy-cdr lst))))
+
+(take 10 (lazy-mapcar #'sqrt *integers*))
+
+(take 10 (lazy-mapcan (lambda (x)
+			(if (evenp x)
+			    (make-lazy (list x))
+			    (lazy-nil)))
+		      *integers*))
+
+(lazy-find-if #'oddp (make-lazy '(2 4 6 7 8 10)))
+
+(lazy-nth 4 (make-lazy '(a b c d e f g)))
+

@@ -34,4 +34,15 @@
   (setf *from-tile* nil)
   (setf *cur-game-tree* (game-tree (gen-board) 0 0 t)))
 
+;; Announcing a Winner
+
+(defun web-announce-winner (board)
+  (fresh-line)
+  (let ((w (winners board)))
+    (if (> (length w) 1)
+	(format t "The game is a tie between ~a" (mapcar #'player-letter w))
+	(format t "The winner is ~a" (player-letter (car w)))))
+  (tag a (href "game.html")
+    (princ " play again")))
+
 ;; to be continued

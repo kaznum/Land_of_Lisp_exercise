@@ -70,5 +70,11 @@
 	 (princ " or make another move:"))))
 
 ;; Handling the Computer Player
+(defun web-handle-computer ()
+  (setf *cur-game-tree* (handle-computer *cur-game-tree*))
+  (princ "The computer has moved. ")
+  (tag script ()
+    (princ
+     "window.setTimeout('window.location=\"game.html?chosen=NIL\"', 5000)")))
 
 ;; to be continued

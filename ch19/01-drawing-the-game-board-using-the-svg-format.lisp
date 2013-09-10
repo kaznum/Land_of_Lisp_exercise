@@ -58,6 +58,25 @@
 ;;; (svg 300 300 (draw-tile-svg 0 0 0 '(0 3) 100 150 '(255 0 0) nil))
 
 ;; Drawing the Board
+(defparameter *die-colors* '((255 63 63) (63 63 255)))
 
-;; to be continued
+(defun draw-board-svg (board chosen-tile legal-tiles)
+  (loop for y below *board-size*
+       do (loop for x below *board-size*
+	       for pos = (+ x (* *board-size* y))
+	       for hex = (aref board pos)
+	       for xx = (* *board-scale* (+ (* 2 x) (- *board-size* y)))
+	       for yy = (* *board-scale* (+ (* y 0.7) *top-offset*))
+	       for col = (brightness (nth (first hex) *die-colors*)
+				     (* -15 (- *board-size* y)))
+	       do (if (member pos legal-tiles)
+		      (tag g ()
+			(tag a ("xlink:href" (make-game-link pos))
+			  (draw-tile-svg x y pos hex xx yy col chosen-tile)))
+		      (draw-tile-svg x y pos hex xx yy col chosen-tile)))))
+
+(defun make-game-link (pos)
+  (format nil "/game.html?chosen=~a" pos))
+
+;; (svg *board-width* *board-height* (draw-board-svg (gen-board) nil nil))
 

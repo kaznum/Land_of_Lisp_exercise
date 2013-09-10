@@ -34,5 +34,30 @@
 
 ;; (svg 100 100 (draw-die-svg 50 50 '(255 0 0)))
 
+;; Drawing a Tile
+(defun draw-tile-svg (x y pos hex xx yy col chosen-tile)
+  (loop for z below 2
+     do (polygon (mapcar (lambda (pt)
+			   (cons (+ xx (* *board-scale* (car pt)))
+				 (+ yy (* *board-scale* (+ (cdr pt) (* (- 1 z) 0.1))))))
+			 '((-1 . -0.2) (0 . -0.5) (1 . -0.2)
+			   (1 . 0.2) (0 . 0.5) (-1 . 0.2)))
+		 (if (eql pos chosen-tile)
+		     (brightness col 100)
+		     col)))
+  (loop for z below (second hex)
+       do (draw-die-svg (+ xx
+			   (* *dice-scale*
+			      0.3
+			      (if (oddp (+ x y z))
+				  -0.3
+				  0.3)))
+			(- yy (* *dice-scale* z 0.8))
+			col)))
+
+;;; (svg 300 300 (draw-tile-svg 0 0 0 '(0 3) 100 150 '(255 0 0) nil))
+
+;; Drawing the Board
+
 ;; to be continued
 

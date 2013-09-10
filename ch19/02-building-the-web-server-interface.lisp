@@ -26,5 +26,12 @@
       (princ "Sorry... I don't know that page.")))
 
 ;; Limitations of Our Game Web Server
+;;; no code
+
+;; Initializing a New Game
+
+(defun web-initialize ()
+  (setf *from-tile* nil)
+  (setf *cur-game-tree* (game-tree (gen-board) 0 0 t)))
 
 ;; to be continued

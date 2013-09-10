@@ -77,4 +77,18 @@
     (princ
      "window.setTimeout('window.location=\"game.html?chosen=NIL\"', 5000)")))
 
-;; to be continued
+;; Drawing the SVG Game Board from Within the HTML
+(defun draw-dod-page (tree selected-tile)
+  (svg *board-width*
+       *board-height*
+       (draw-board-svg (cadr tree)
+		       selected-tile
+		       (take-all (if selected-tile
+				     (lazy-mapcar
+				      (lambda (move)
+					(when (eql (caar move)
+						   selected-tile)
+					  (cadar move)))
+				      (caddr tree))
+				     (lazy-mapcar #'caar (caddr tree)))))))
+

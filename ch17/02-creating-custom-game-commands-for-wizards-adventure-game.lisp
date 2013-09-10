@@ -21,7 +21,7 @@
 (pushnew 'weld *allowed-commands*)
 
 ;;; A Command for Dunking
-(setf *bucket-filled* nil)
+(defparameter *bucket-filled* nil)
 (defun dunk (subject object)
   (if (and (eq *location* 'garden)
 	   (eq subject 'bucket)
@@ -55,7 +55,7 @@
 	     '(the chain is now securely welded to the bucket.))
       '(you do not have a bucket.)))
 
-(setf *bucket-filled* nil)
+(defparameter *bucket-filled* nil)
 
 (game-action dunk bucket well garden
   (if *chain-welded*

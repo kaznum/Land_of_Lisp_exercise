@@ -84,11 +84,11 @@
        (draw-board-svg (cadr tree)
 		       selected-tile
 		       (take-all (if selected-tile
-				     (lazy-mapcar
-				      (lambda (move)
-					(when (eql (caar move)
-						   selected-tile)
-					  (cadar move)))
-				      (caddr tree))
+				     (lazy-cons selected-tile (lazy-mapcar
+							       (lambda (move)
+								 (when (eql (caar move)
+									    selected-tile)
+								   (cadar move)))
+							       (caddr tree)))
 				     (lazy-mapcar #'caar (caddr tree)))))))
 

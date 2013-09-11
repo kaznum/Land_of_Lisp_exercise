@@ -40,7 +40,18 @@
 				hex))))
 
 ;; Doing the Actual Dice Rolling
+(defun roll-dice (dice-num)
+  (let ((total (loop repeat dice-num
+		    sum (1+ (random 6)))))
+    (fresh-line)
+    (format t "On ~a dice rolled ~a. " dice-num total)
+    total))
 
+
+(defun roll-against (src-dice dst-dice)
+  (> (roll-dice src-dice) (roll-dice dst-dice)))
+
+;; Calling the Dice Rolling Code from Our Game Engine
 
 ;; to be continued
 

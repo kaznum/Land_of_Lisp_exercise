@@ -39,6 +39,31 @@
     (board-array (f (coerce board 'list)
 		    (largest-cluster-size board player)))))
 
+
+(defun web-handle-human (pos)
+  (cond ((not pos) (princ "Please choose a hex to move from:"))
+	((eq pos 'pass)
+	 (setf *cur-game-tree* (cadr (lazy-car (caddr *cur-game-tree*))))
+	 (princ "Your reinforcements have been placed.")
+	 (tag a (href (make-game-link nil))
+	   (princ "continue")))
+	((not *from-tile*) (setf *from-tile* pos)
+	 (princ "Now choose a destination:"))
+	((eq pos *from-tile*) (setf *from-tile* nil)
+	 (princ "Move cancelled."))
+	(t
+	 (setf *cur-game-tree*
+	       (pick-chance-branch (cadr *cur-game-tree*)
+				   (lazy-find-if (lambda (move)
+						   (equal (car move)
+							  (list *from-tile* pos)))
+						 (caddr *cur-game-tree*))))
+	 (setf *from-tile* nil)
+	 (princ "You may now ")
+	 (tag a (href (make-game-link 'pass))
+	   (princ "pass"))
+	 (princ " or make another move:"))))
+
 ;; (serve #'dod-request-handler)
 
 
